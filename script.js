@@ -15,15 +15,20 @@ let keys = calculator.querySelector('.calculator__keys')
 
 keys.addEventListener('click', e => {
     if (e.target.matches('button')) {
-    for (let i=0; i<=9; i++) {
-        if (e.target.textContent === `${i}`) {
-            document.getElementById("screen").innerHTML += i
-            // le += i met les chiffres à la suite
-            console.log(i)
+        for (let i=0; i<=9; i++) {
+            if (e.target.textContent === `${i}`) {
+                if (document.getElementById("screen").innerHTML === '0') {
+                    document.getElementById("screen").innerHTML = i
+                }
+                else {
+                    document.getElementById("screen").innerHTML += i
+                }
+                // le += i met les chiffres à la suite
+                console.log(i)
+            }
+            if (e.target.textContent === "AC") {
+                document.getElementById("screen").innerHTML = 0
+            }
         }
-        if (e.target.textContent === "AC") {
-            document.getElementById("screen").innerHTML = 0
     }
-    }
-    }
-    })
+})
