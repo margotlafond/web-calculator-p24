@@ -1,15 +1,6 @@
 // NOTE: 
 // This is the starter file for a blog post "How to build a calculator". You can follow the lesson at https://zellwk.com/blog/calculator-part-1
 
-// Conseils :
-// 1er truc : console log qui affiche le bouton sur lequel on a cliqué quand on clique sur un chiffre
-// ensuite l'afficher dans la calculette, les nb à 1 chiffres puis 2
-// ensuite 2 chiffres
-// quand il y a 000005 ça affiche que 5
-// on termine par le décimal si on y arrive, parce que c'est beaucoup plus compliqué
-
-// document.addEventListener()
-
 let calculator = document.querySelector('.calculator')
 let keys = calculator.querySelector('.calculator__keys')
 let nb1 = 0
@@ -36,30 +27,37 @@ keys.addEventListener('click', e => {
                 if (preoperation) {nb1 = Number(document.getElementById("screen").innerHTML)}
                 else {nb2 = Number(document.getElementById("screen").innerHTML)}
             }
-            if (e.target.textContent === "AC") {
-                document.getElementById("screen").innerHTML = 0
-                nb1 = 0
-                nb2 = 0
+        }
+        if (e.target.textContent === "AC") {
+            document.getElementById("screen").innerHTML = 0
+            nb1 = 0
+            nb2 = 0
+            console.log("AC")
+            preoperation = true
+        }
+        if (e.target.textContent === ".") {
+            document.getElementById("screen").innerHTML += "."
+            if (preoperation) {nb1 = Number(document.getElementById("screen").innerHTML)}
+            else {nb2 = Number(document.getElementById("screen").innerHTML)}
+            console.log(".")
+        }
+        if (e.target.classList.contains("key--operator")) {
+            preoperation = false
+            op = e.target.getAttribute("data-action")
+            document.getElementById("screen").innerHTML = e.target.textContent
+            console.log(e.target.textContent)
+        }
+        if (e.target.classList.contains("key--equal")) {
+            if (!preoperation) {
+                let res = 0
+                if (op === "add") {res = nb1+nb2}
+                if (op === "subtract") {res = nb1-nb2}
+                if (op === "multiply") {res = nb1*nb2}
+                if (op === "divide") {res = nb1/nb2}
+                document.getElementById("screen").innerHTML = res
+                nb1 = res
                 preoperation = true
-            }
-            if (e.target.classList.contains("key--operator")) {
-                preoperation = false
-                op = e.target.getAttribute("data-action")
-                document.getElementById("screen").innerHTML = e.target.textContent
-                console.log(e.target.textContent)
-            }
-            if (e.target.classList.contains("key--equal")) {
-                if (!preoperation) {
-                    let res = 0
-                    if (op === "add") {res = nb1+nb2}
-                    if (op === "subtract") {res = nb1-nb2}
-                    if (op === "multiply") {res = nb1*nb2}
-                    if (op === "divide") {res = nb1/nb2}
-                    document.getElementById("screen").innerHTML = res
-                    nb1 = res
-                    preoperation = true
 
-                }
             }
         }
     }
